@@ -11,12 +11,14 @@ import org.apache.thrift.transport.TTransportException;
 
 /** This class is responsible for creating the service impl class and 
  * bind it to a specific port **/
-public final class CommServer {
+public final class CommServer implements Runnable{
 
 	private int    						m_nPort;
 	private DistGrepServiceImpl         m_oImpl;
 	private TServer 					m_oServer;
 	private int							m_nNodeIndex;
+	private Thread 						m_oSerThread;
+	
 	
 	public CommServer(int nPort, int nNodeID)
 	{
@@ -24,6 +26,7 @@ public final class CommServer {
 		m_oImpl			= null;
 		m_oServer       = null;
 		m_nNodeIndex    = nNodeID;
+		m_oSerThread	= null;
 	}
 	
 	public void setMasterProxy(CommClient masterProxy) {
@@ -59,8 +62,21 @@ public final class CommServer {
 	// this might require threading to avoid blocking the current thread
 	public void StartService()
 	{
-		m_oServer.serve();
+		m_oSerThread = new Thread(this);
+		m_oSerThread.start();
 	}
 	
-	
+	public void WaitForServiceToStop()
+	{
+		try {
+			m_oSerThread.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void run() {
+		m_oServer.serve();		
+	}
 }

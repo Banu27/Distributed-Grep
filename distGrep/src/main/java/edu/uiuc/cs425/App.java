@@ -85,7 +85,10 @@ public class App
         
         CallStartProcessing();
         
-        //Done processing calls       
+        // waits for the thrift service to stop
+        m_oServer.WaitForServiceToStop();
+        
+        
         
     }
 }
