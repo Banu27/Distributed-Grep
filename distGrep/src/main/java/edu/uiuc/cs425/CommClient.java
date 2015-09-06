@@ -18,10 +18,8 @@ public final class CommClient implements Iface {
 	private TSocket 					m_oTransport;
 	
 	
-	public CommClient(String sIP, int nPort)
+	public CommClient()
 	{
-		this.m_sIP 		= sIP;
-		this.m_nPort 	= nPort; 
 		this.m_oProxy   = null;
 	}
 	
@@ -29,8 +27,11 @@ public final class CommClient implements Iface {
 	 *  before any service calls are made. The methods establishes the connection
 	 *  with the remote server. 
 	 *  Returns Constants.SUCCESS on success and Constants.FAILURE on failure**/
-	public int Initialize()
+	public int Initialize(String sIP, int nPort)
 	{
+		this.m_sIP 		= sIP;
+		this.m_nPort 	= nPort; 
+
 		// thrift calls
 		try
 	    {
@@ -43,10 +44,10 @@ public final class CommClient implements Iface {
 	    catch (TException e)
 	    {
 	      e.printStackTrace();
-	      return Constants.FAILURE;
+	      return Commons.FAILURE;
 	    }
 		System.out.println("Connection established with " + m_sIP + ":" + Integer.toString(m_nPort));
-		return Constants.SUCCESS;
+		return Commons.SUCCESS;
 	}
 	
 	/** The Close() method is called once all the required operations 
@@ -109,11 +110,11 @@ public final class CommClient implements Iface {
 		return ret;
 	}
 
-	public void doneProcessing() throws TException {
+	public void doneProcessing(int nodeID) throws TException {
 		
 		try
 		{
-			m_oProxy.doneProcessing();
+			m_oProxy.doneProcessing(nodeID);
 		}
 		catch (TException e)
 		{

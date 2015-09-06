@@ -16,11 +16,19 @@ public final class CommServer {
 	private int    						m_nPort;
 	private DistGrepServiceImpl         m_oImpl;
 	private TServer 					m_oServer;
-	public CommServer(int nPort)
+	private int							m_nNodeIndex;
+	
+	public CommServer(int nPort, int nNodeID)
 	{
 		this.m_nPort 	= nPort; 
 		m_oImpl			= null;
 		m_oServer       = null;
+		m_nNodeIndex    = nNodeID;
+	}
+	
+	public void setMasterProxy(CommClient masterProxy) {
+		
+		m_oImpl.setMasterProxy(masterProxy);		
 	}
 	
 	public int Initialize()
@@ -36,16 +44,16 @@ public final class CommServer {
 			
 			args.processor(new DistributedGrep.Processor(m_oImpl));
 			
-			args.selectorThreads(Constants.NETWORK_THREAD_COUNT);
-			args.workerThreads(Constants.WORKER_THREAD_COUNT);
+			args.selectorThreads(Commons.NETWORK_THREAD_COUNT);
+			args.workerThreads(Commons.WORKER_THREAD_COUNT);
 			
 			m_oServer = new TThreadedSelectorServer(args);
 			
 		} catch (TTransportException e) {
 			e.printStackTrace();
-			return Constants.FAILURE;
+			return Commons.FAILURE;
 		}
-		return Constants.SUCCESS;
+		return Commons.SUCCESS;
 	}
 	
 	// this might require threading to avoid blocking the current thread
