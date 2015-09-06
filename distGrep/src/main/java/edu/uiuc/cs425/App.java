@@ -15,15 +15,14 @@ public class App
 	
 	public static void RunExecutables() {
 		
-		String sshCommand = "ssh ";
+		String sshCommand = "ssh";
 		
 		//command is the executable run with &
-		String command = "java -cp ~/distGrepFinal.jar edu.uiuc.cs425.App";
+		String command = "java -cp $HOME/distGrepFinal.jar edu.uiuc.cs425.App";
 		
 		//Start all VMS
 		for (int i=1; i<Commons.NUMBER_OF_VMS; i++) {
-			Commons.SystemCommand(new String(sshCommand + Commons.VM_NAMES[i] + " "
-								+ command + " " + String.valueOf(m_nNodeID) + " > ~/grep.out 2>&1 &" )); 
+			Commons.SystemCommand(new String[] { sshCommand , Commons.VM_NAMES[i] , command + " " +  String.valueOf(i) + " > $HOME/grep.out 2>&1 & " }); 
 		}				
 		
 	}
@@ -40,6 +39,7 @@ public class App
 		
 		m_oClients = new CommClient[Commons.NUMBER_OF_VMS];
 		for(int i=0; i<Commons.NUMBER_OF_VMS; i++) {
+			m_oClients[i] = new CommClient();
 			m_oClients[i].Initialize(Commons.VM_NAMES[i], Commons.SERVICE_PORT); 
 		}
 		
@@ -60,15 +60,16 @@ public class App
 	
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
         m_nNodeID = Integer.parseInt(args[0]);
         
+        System.out.println( "Node ID: " + String.valueOf(m_nNodeID));
         //Starting the servers
         StartServer();
         
         if(m_nNodeID == Commons.MASTER) {
         	
         	RunExecutables();
+		Thread.sleep(4000);
         	CreateClients();
         	m_oMasterProxy = m_oClients[0];
         	
@@ -83,7 +84,8 @@ public class App
         m_oServer.setMasterProxy(m_oMasterProxy);
         
         
-        CallStartProcessing();
+        if(m_nNodeID == Commons.MASTER)
+		CallStartProcessing();
         
         // waits for the thrift service to stop
         m_oServer.WaitForServiceToStop();

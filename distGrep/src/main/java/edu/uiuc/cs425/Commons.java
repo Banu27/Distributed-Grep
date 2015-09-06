@@ -11,7 +11,7 @@ public final class Commons {
 	public static final int NETWORK_THREAD_COUNT = 4;
 	public static final int WORKER_THREAD_COUNT = 8;
 	public static final int MASTER = 0;
-	public static final int NUMBER_OF_VMS = 7;
+	public static final int NUMBER_OF_VMS = 2;
 	public static final String [] VM_NAMES = {"fa15-cs425-g01-01.cs.illinois.edu", 
 			"fa15-cs425-g01-02.cs.illinois.edu",
 			"fa15-cs425-g01-03.cs.illinois.edu",
@@ -21,12 +21,11 @@ public final class Commons {
 			"fa15-cs425-g01-07.cs.illinois.edu" };
 	public static final String username = "muthkmr2";
 	
-	public static void SystemCommand(String command) {
+	public static void SystemCommand(String[] command) {
 		
 		String s = null;
 		
 		try {
-			System.out.println(command);		
 			Process p = Runtime.getRuntime().exec(command);
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
@@ -43,7 +42,6 @@ public final class Commons {
 				System.out.println(s);
 	        }
 	             
-	        System.exit(0);
 		
 		} catch (IOException e) {
             System.out.println("exception happened - here's what I know: ");

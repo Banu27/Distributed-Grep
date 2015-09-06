@@ -43,6 +43,7 @@ public final class CommClient implements Iface {
 	    }  
 	    catch (TException e)
 	    {
+	      System.out.println("Failed to connect to " + sIP + ":" + nPort);
 	      e.printStackTrace();
 	      return Commons.FAILURE;
 	    }
