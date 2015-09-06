@@ -18,12 +18,12 @@ public class App
 		String sshCommand = "ssh ";
 		
 		//command is the executable run with &
-		String command = "echo \"Hello World\" ";
+		String command = "java -cp ~/distGrepFinal.jar edu.uiuc.cs425.App";
 		
 		//Start all VMS
 		for (int i=1; i<Commons.NUMBER_OF_VMS; i++) {
-			Commons.SystemCommand(new String(sshCommand+Commons.VM_NAMES[i]+" "
-								+command+" "+String.valueOf(m_nNodeID))); 
+			Commons.SystemCommand(new String(sshCommand + Commons.VM_NAMES[i] + " "
+								+ command + " " + String.valueOf(m_nNodeID) + " > ~/grep.out 2>&1 &" )); 
 		}				
 		
 	}
@@ -61,7 +61,7 @@ public class App
     public static void main( String[] args )
     {
         System.out.println( "Hello World!" );
-        m_nNodeID = Integer.parseInt(args[1]);
+        m_nNodeID = Integer.parseInt(args[0]);
         
         //Starting the servers
         StartServer();

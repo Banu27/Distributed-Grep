@@ -26,7 +26,7 @@ public final class Commons {
 		String s = null;
 		
 		try {
-		
+			System.out.println(command);		
 			Process p = Runtime.getRuntime().exec(command);
 			BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
