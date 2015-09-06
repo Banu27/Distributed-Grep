@@ -48,7 +48,7 @@ public final class CommServer {
 		return Constants.SUCCESS;
 	}
 	
-	// this might reqire threading to avoid blocking the current thread
+	// this might require threading to avoid blocking the current thread
 	public void StartService()
 	{
 		m_oServer.serve();

@@ -9,6 +9,7 @@ public class DistGrepServiceImpl implements Iface {
 	public void startProcessing(String pattern) throws TException {
 		// TODO Auto-generated method stub
 
+		// Create FileProcessing object
 	}
 
 	public boolean isAlive() throws TException {
