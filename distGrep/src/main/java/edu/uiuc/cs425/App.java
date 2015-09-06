@@ -58,7 +58,7 @@ public class App
 		}
 	}
 	
-    public static void main( String[] args )
+    public static void main( String[] args ) throws InterruptedException
     {
         m_nNodeID = Integer.parseInt(args[0]);
         
@@ -69,7 +69,7 @@ public class App
         if(m_nNodeID == Commons.MASTER) {
         	
         	RunExecutables();
-		Thread.sleep(4000);
+        	Thread.sleep(4000);
         	CreateClients();
         	m_oMasterProxy = m_oClients[0];
         	
