@@ -4,8 +4,8 @@ typedef i32 int
 
 service DistributedGrep{
 
-	void startProcessing(1:string pattern),
+	oneway void startProcessing(1:string pattern),
 	bool isAlive(),
 	int getProgress(),
-	bool doneProcessing(),
+	oneway void doneProcessing(),
 }
