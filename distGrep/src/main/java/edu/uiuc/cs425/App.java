@@ -82,7 +82,7 @@ public class App
         } 
      
         m_oServer.setMasterProxy(m_oMasterProxy);
-        m_oServer
+        
         
         if(m_nNodeID == Commons.MASTER)
 		CallStartProcessing();
