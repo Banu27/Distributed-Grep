@@ -44,7 +44,7 @@ public final class CommServer implements Runnable{
 			args.protocolFactory(new TBinaryProtocol.Factory());
 			
 			m_oImpl = new DistGrepServiceImpl();
-			
+			m_oImpl.setNodeID(m_nNodeIndex);
 			args.processor(new DistributedGrep.Processor(m_oImpl));
 			
 			args.selectorThreads(Commons.NETWORK_THREAD_COUNT);
