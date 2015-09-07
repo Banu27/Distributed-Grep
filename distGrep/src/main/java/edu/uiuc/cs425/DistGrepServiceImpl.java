@@ -8,11 +8,12 @@ public class DistGrepServiceImpl implements Iface {
 	
 	private CommClient m_oMasterProxy;
 	private int 	   m_nNodeIndex;
-	FileProcessing	   m_oFileProcessing;
+	private FileProcessing m_oFileProcessing;
 	
 	public DistGrepServiceImpl() {
 		// TODO Auto-generated constructor stub
 		m_oMasterProxy = null;
+		m_oFileProcessing = new FileProcessing();
 		m_oFileProcessing.Initialize(Commons.VM_NAMES[m_nNodeIndex]);
 	}
 
