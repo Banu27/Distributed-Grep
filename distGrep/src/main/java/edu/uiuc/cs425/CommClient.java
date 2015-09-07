@@ -3,7 +3,10 @@ package edu.uiuc.cs425;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocol;
+import org.apache.thrift.transport.TFramedTransport;
 import org.apache.thrift.transport.TSocket;
+import org.apache.thrift.transport.TTransport;
+
 import edu.uiuc.cs425.DistributedGrep.Iface;
 
 
@@ -15,7 +18,7 @@ public final class CommClient implements Iface {
 	private String 						m_sIP;
 	private int    						m_nPort;
 	private DistributedGrep.Client      m_oProxy;
-	private TSocket 					m_oTransport;
+	private TTransport 					m_oTransport;
 	
 	
 	public CommClient()
@@ -35,7 +38,7 @@ public final class CommClient implements Iface {
 		// thrift calls
 		try
 	    {
-		  m_oTransport = new TSocket(m_sIP, m_nPort);
+		  m_oTransport = new TFramedTransport(new TSocket(m_sIP, m_nPort));
 		  m_oTransport.open();
 	      TProtocol protocol = new TBinaryProtocol(m_oTransport);
 	      m_oProxy = new DistributedGrep.Client(protocol);     
