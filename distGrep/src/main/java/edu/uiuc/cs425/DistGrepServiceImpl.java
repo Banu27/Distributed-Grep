@@ -8,10 +8,12 @@ public class DistGrepServiceImpl implements Iface {
 	
 	private CommClient m_oMasterProxy;
 	private int 	   m_nNodeIndex;
+	FileProcessing	   m_oFileProcessing;
 	
 	public DistGrepServiceImpl() {
 		// TODO Auto-generated constructor stub
 		m_oMasterProxy = null;
+		m_oFileProcessing.Initialize(Commons.VM_NAMES[m_nNodeIndex]);
 	}
 
 	public void setMasterProxy(CommClient masterProxy) {
@@ -27,6 +29,8 @@ public class DistGrepServiceImpl implements Iface {
 		// TODO Auto-generated method stub
 
 		System.out.println("Received startProccessing request");
+		//Call the file search
+		m_oFileProcessing.StartSearching();
 		m_oMasterProxy.doneProcessing(m_nNodeIndex);
 	}
 

@@ -5,9 +5,9 @@ import java.util.Queue;
 
 public class FileProcessing {
 	
-	Queue m_oLogFiles;
-    
-
+	Queue<String> m_oLogFiles;
+    private String m_sVMName;
+	
 	int GetProgress() {
 		
 		System.out.println("Returning progress");
@@ -21,21 +21,23 @@ public class FileProcessing {
 		
 	}
 	
-	void Initialize() {
+	void Initialize(String VMName) {
 		
-		m_oLogFiles = new LinkedList(); //Constructor needed??
-		
-		System.out.println("Initializing");	
-		//Create queue of files 
-		
+		m_oLogFiles = new LinkedList<String>(); //Constructor needed??
+		m_oLogFiles.add("log1.txt"); //Add multiple files		
+		m_sVMName = VMName;
 	}
 	
 	void StartSearching() {
 		
 		System.out.println("Start searching file/files");
+		while(!m_oLogFiles.isEmpty()) {
+			String fileName = m_oLogFiles.remove();
+			String sshCommand = "ssh";
+			String command = "grep Here ./logs/" + fileName;
+			Commons.SystemCommand(new String[] { sshCommand , m_sVMName , command , " > ./logs/grep.out & " });			
+		}
 		
-		//Dequeue files and search
-		//Call to done processing function if queue is empty
 	}
 	 
 	
