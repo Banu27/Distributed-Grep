@@ -36,6 +36,7 @@ public class FileProcessing {
 			String sshCommand = "ssh";
 			String command = "grep Here ./logs/" + fileName;
 			Commons.SystemCommand(new String[] { sshCommand , m_sVMName , command , " > ./logs/grep.out & " });			
+			System.out.println("grep call over");
 		}
 		
 	}
