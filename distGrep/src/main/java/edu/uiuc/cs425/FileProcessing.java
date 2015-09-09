@@ -37,7 +37,7 @@ public class FileProcessing {
 			String sshCommand = "ssh";
 			String command = "grep";
 			//sshCommand , m_sVMName , 
-			Commons.SystemCommand(new String[] { command ,"as",username+"/logs/log1.txt > ./logs/grepResult.out & " });			
+			Commons.SystemCommand(new String[] { command ,"as",username+"/logs/log1.txt > "+username+"/logs/grepResult.out & " });			
 			System.out.println("grep call over"); //Why is this showing up on my command line??
 		}
 		
