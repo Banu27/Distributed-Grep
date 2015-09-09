@@ -35,8 +35,8 @@ public class FileProcessing {
 			String fileName = m_oLogFiles.remove();
 			String sshCommand = "ssh";
 			String command = "grep Here ./logs/" + fileName;
-			Commons.SystemCommand(new String[] { sshCommand , m_sVMName , command , " > ./logs/grep.out & " });			
-			System.out.println("grep call over");
+			Commons.SystemCommand(new String[] { sshCommand , m_sVMName , command , " > $HOME/logs/grepResult.out & " });			
+			System.out.println("grep call over"); //Why is this showing up on my command line??
 		}
 		
 	}
