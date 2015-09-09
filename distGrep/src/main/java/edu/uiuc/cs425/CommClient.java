@@ -1,5 +1,8 @@
 package edu.uiuc.cs425;
 
+import java.io.File;
+
+import org.apache.thrift.TBase;
 import org.apache.thrift.TException;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocol;
@@ -10,7 +13,6 @@ import org.apache.thrift.transport.TTransport;
 import edu.uiuc.cs425.DistributedGrep.Iface;
 
 
-
 /** This class implements the proxy to the thrift service "DistributedGrep"**/
 public final class CommClient implements Iface {
 	
@@ -19,6 +21,7 @@ public final class CommClient implements Iface {
 	private int    						m_nPort;
 	private DistributedGrep.Client      m_oProxy;
 	private TTransport 					m_oTransport;
+	private TProtocol 					m_oProtocol;
 	
 	
 	public CommClient()
@@ -40,8 +43,8 @@ public final class CommClient implements Iface {
 	    {
 		  m_oTransport = new TFramedTransport(new TSocket(m_sIP, m_nPort));
 		  m_oTransport.open();
-	      TProtocol protocol = new TBinaryProtocol(m_oTransport);
-	      m_oProxy = new DistributedGrep.Client(protocol);     
+	      m_oProtocol = new TBinaryProtocol(m_oTransport);
+	      m_oProxy = new DistributedGrep.Client(m_oProtocol);     
 	      
 	    }  
 	    catch (TException e)
@@ -119,8 +122,19 @@ public final class CommClient implements Iface {
 		try
 		{
 			m_oProxy.doneProcessing(nodeID);
+			
 		}
 		catch (TException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendOutput(int nodeID, String data) throws TException {
+		
+		try {
+			m_oProxy.sendOutput(nodeID, data);
+		} catch (TException e)
 		{
 			e.printStackTrace();
 		}

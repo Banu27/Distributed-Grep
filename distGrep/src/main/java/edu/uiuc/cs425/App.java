@@ -58,6 +58,12 @@ public class App
 		}
 	}
 	
+	public static void CloseClients() {
+		for(int i=0; i<Commons.NUMBER_OF_VMS; i++) 
+			m_oClients[i].Close(); 
+		
+	}
+	
     public static void main( String[] args ) throws InterruptedException
     {
         m_nNodeID = Integer.parseInt(args[0]);
@@ -90,7 +96,7 @@ public class App
         // waits for the thrift service to stop
         m_oServer.WaitForServiceToStop();
         
-        
+        CloseClients();
         
     }
 }

@@ -8,4 +8,5 @@ service DistributedGrep{
 	bool isAlive(),
 	int getProgress(),
 	oneway void doneProcessing(1:int nodeIndex ),
+	oneway void sendOutput(1: int nodeIndex, string data),
 }
