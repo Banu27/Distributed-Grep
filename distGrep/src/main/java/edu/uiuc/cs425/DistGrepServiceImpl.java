@@ -37,6 +37,8 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		System.out.println("Received startProccessing request");
 		//Call the file search
 		m_oFileProcessing.StartSearching();
+		doneProcessing();
+		sendOutput();
 		
 	}
 	
