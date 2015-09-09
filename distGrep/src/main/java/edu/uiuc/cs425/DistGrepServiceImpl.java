@@ -57,7 +57,7 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 			//System.out.println("Receiving data from node " + String.valueOf(nodeIndex));
 			try {
 
-				byte[] encoded = Files.readAllBytes(Paths.get("$HOME/logs/log1.txt"));
+				byte[] encoded = Files.readAllBytes(Paths.get("./logs/log1.txt"));
 				String data = new String(encoded, Charset.defaultCharset());
 				m_oMasterProxy.sendOutput(m_nNodeIndex, data );
 				
