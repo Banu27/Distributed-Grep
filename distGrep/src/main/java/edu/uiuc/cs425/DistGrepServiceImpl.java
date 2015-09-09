@@ -75,7 +75,8 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 	
 	public void sendOutput(int nodeIndex, String data) throws TException {
 		
-		System.out.println("Receiving data from node " + String.valueOf(nodeIndex));		
+		System.out.println("Receiving data from node " + String.valueOf(nodeIndex));
+		System.out.println(data);
 		//Commons.SystemCommand(new String[] {  "echo ", myFile, " > $HOME/log"+nodeIndex+".txt &" }); 
 	}
 	public boolean isAlive() throws TException {
