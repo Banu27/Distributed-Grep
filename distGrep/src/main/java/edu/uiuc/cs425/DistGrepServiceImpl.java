@@ -27,8 +27,7 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		m_oMasterProxy = masterProxy;
 	}
 	
-	public void setNodeID(int nodeID)
-	{
+	public void setNodeID(int nodeID) {
 		m_nNodeIndex = nodeID;
 	}
 	
@@ -37,27 +36,17 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		System.out.println("Received startProccessing request");
 		//Call the file search
 		m_oFileProcessing.StartSearching();
-		doneProcessing();
-		sendOutput();
+		m_oMasterProxy.doneProcessing(m_nNodeIndex);
+		sendOutputHelper(); //Calls Send Output
 		
 	}
 	
-	public void doneProcessing() {
-		try {
-			//WHAT IS THIS? WHERE IS THIS BEING CALLED?
-			m_oMasterProxy.doneProcessing(m_nNodeIndex);
-			
-		} catch (TException e) {
-			e.printStackTrace();
-		}		
-	}
-
-	public void sendOutput() {
+	public void sendOutputHelper() {
 		try {
 			//System.out.println("Receiving data from node " + String.valueOf(nodeIndex));
 			try {
 
-				byte[] encoded = Files.readAllBytes(Paths.get("./logs/log1.txt"));
+				byte[] encoded = Files.readAllBytes(Paths.get("./logs/grepResult.out"));
 				String data = new String(encoded, Charset.defaultCharset());
 				m_oMasterProxy.sendOutput(m_nNodeIndex, data );
 				
@@ -79,6 +68,7 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		System.out.println(data);
 		//Commons.SystemCommand(new String[] {  "echo ", myFile, " > $HOME/log"+nodeIndex+".txt &" }); 
 	}
+	
 	public boolean isAlive() throws TException {
 		// TODO Auto-generated method stub
 		return false;
