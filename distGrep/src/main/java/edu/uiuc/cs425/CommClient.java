@@ -130,10 +130,10 @@ public final class CommClient implements Iface {
 		}
 	}
 	
-	public void sendOutput(int nodeID, String data) throws TException {
+	public void transferOutput(int nodeID, String data) throws TException {
 		
 		try {
-			m_oProxy.sendOutput(nodeID, data);
+			m_oProxy.transferOutput(nodeID, data);
 		} catch (TException e)
 		{
 			e.printStackTrace();

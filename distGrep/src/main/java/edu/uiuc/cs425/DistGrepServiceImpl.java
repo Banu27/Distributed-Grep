@@ -17,12 +17,15 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 	private int 	   				m_nNodeIndex;
 	private FileProcessing 			m_oFileProcessing;
 	private int 					m_nDoneProcessingNumber = 0;
-	private final Object 			m_oLock = new Object();
+	private final Object 			m_oLock;
+	private String [] 				m_sGrepOutputData;
 	
 	public DistGrepServiceImpl() {
 		m_oMasterProxy = null;
 		m_oFileProcessing = new FileProcessing();
 		m_oFileProcessing.Initialize(Commons.VM_NAMES[m_nNodeIndex]);
+		m_oLock = new Object();
+		m_sGrepOutputData = new String[7];
 	}
 
 	public void setMasterProxy(CommClient masterProxy) {
@@ -49,7 +52,7 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 
 				byte[] encoded = Files.readAllBytes(Paths.get("./logs/grepResult.out"));
 				String data = new String(encoded, Charset.defaultCharset());
-				m_oMasterProxy.sendOutput(m_nNodeIndex, data );
+				m_oMasterProxy.transferOutput(m_nNodeIndex, data );
 				
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -63,9 +66,10 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		}		
 	}
 	
-	public void sendOutput(int nodeIndex, String data) throws TException {
+	public void transferOutput(int nodeIndex, String data) throws TException {
 		
 		System.out.println("Receiving data from node " + String.valueOf(nodeIndex));
+		m_sGrepOutputData[nodeIndex] = data;
 		//System.out.println(data);
 		//Commons.SystemCommand(new String[] {  "echo ", myFile, " > $HOME/log"+nodeIndex+".txt &" }); 
 	}
@@ -87,6 +91,16 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 			m_nDoneProcessingNumber = m_nDoneProcessingNumber + 1;
 		}
 		System.out.println("Number of done processing : "+String.valueOf(m_nDoneProcessingNumber));		
+		if(m_nDoneProcessingNumber == 7) {
+			
+			System.out.println("Printing data : ");
+			for(int i=0; i<7; i++)
+			{
+				System.out.println("Node number : "+String.valueOf(i));
+				System.out.println(m_sGrepOutputData[i]);
+			}
+			
+		}
 		return;
 	}
 
