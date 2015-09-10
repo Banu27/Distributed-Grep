@@ -16,7 +16,7 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 	private CommClient 				m_oMasterProxy;
 	private int 	   				m_nNodeIndex;
 	private FileProcessing 			m_oFileProcessing;
-	private int 					m_nDoneProcessingNumber;
+	private int 					m_nDoneProcessingNumber = 0;
 	private final Object 			m_oLock = new Object();
 	
 	public DistGrepServiceImpl() {
@@ -39,8 +39,7 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		//Call the file search
 		m_oFileProcessing.StartSearching();
 		m_oMasterProxy.doneProcessing(m_nNodeIndex);
-		sendOutputHelper(); //Calls Send Output
-		
+		sendOutputHelper(); //Calls Send Output		
 	}
 	
 	public void sendOutputHelper() {
@@ -67,7 +66,7 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 	public void sendOutput(int nodeIndex, String data) throws TException {
 		
 		System.out.println("Receiving data from node " + String.valueOf(nodeIndex));
-		System.out.println(data);
+		//System.out.println(data);
 		//Commons.SystemCommand(new String[] {  "echo ", myFile, " > $HOME/log"+nodeIndex+".txt &" }); 
 	}
 	
@@ -87,8 +86,7 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		synchronized (m_oLock) {
 			m_nDoneProcessingNumber = m_nDoneProcessingNumber + 1;
 		}
-		System.out.println("Number of done processing : "+String.valueOf(m_nDoneProcessingNumber));
-		
+		System.out.println("Number of done processing : "+String.valueOf(m_nDoneProcessingNumber));		
 		return;
 	}
 
