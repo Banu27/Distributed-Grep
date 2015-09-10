@@ -8,10 +8,10 @@ import org.apache.thrift.TException;
  */
 public class App 
 {
-	private static CommClient [] m_oClients;
-	private static CommClient m_oMasterProxy;
-	private static int m_nNodeID;
-	public static CommServer m_oServer;
+	private static CommClient [] 		m_oClients;
+	private static CommClient 			m_oMasterProxy;
+	private static int 					m_nNodeID;
+	public static CommServer 			m_oServer;
 	
 	public static void RunExecutables() {
 		

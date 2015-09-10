@@ -5,11 +5,11 @@ import java.util.Queue;
 
 public class FileProcessing {
 	
-	Queue<String> m_oLogFiles;
-    private String m_sVMName;
+	Queue<String> 			m_oLogFiles;
+    private String 			m_sVMName;
 	
+    
 	int GetProgress() {
-		
 		System.out.println("Returning progress");
 		return 0;
 	}

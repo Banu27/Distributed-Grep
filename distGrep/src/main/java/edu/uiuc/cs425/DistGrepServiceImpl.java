@@ -13,9 +13,11 @@ import edu.uiuc.cs425.DistributedGrep.Iface;
 
 public class DistGrepServiceImpl implements DistributedGrep.Iface {
 	
-	private CommClient m_oMasterProxy;
-	private int 	   m_nNodeIndex;
-	private FileProcessing m_oFileProcessing;
+	private CommClient 				m_oMasterProxy;
+	private int 	   				m_nNodeIndex;
+	private FileProcessing 			m_oFileProcessing;
+	private int 					m_nDoneProcessingNumber;
+	private final Object 			m_oLock = new Object();
 	
 	public DistGrepServiceImpl() {
 		m_oMasterProxy = null;
@@ -82,6 +84,11 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 	public void doneProcessing(int nodeIndex) throws TException {
 		
 		System.out.println("Received doneProccessing message from node " + String.valueOf(nodeIndex));
+		synchronized (m_oLock) {
+			m_nDoneProcessingNumber = m_nDoneProcessingNumber + 1;
+		}
+		System.out.println("Number of done processing : "+String.valueOf(m_nDoneProcessingNumber));
+		
 		return;
 	}
 
