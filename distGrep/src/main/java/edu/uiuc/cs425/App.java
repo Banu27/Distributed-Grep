@@ -23,7 +23,7 @@ public class App
 		
 		//Start all VMS
 		for (int i=1; i<Commons.NUMBER_OF_VMS; i++) {
-			Commons.SystemCommand(new String [] { sshCommand, Commons.VM_NAMES[i], killCommand} );
+			//Commons.SystemCommand(new String [] { sshCommand, Commons.VM_NAMES[i], killCommand} );
 			Commons.SystemCommand(new String[] { sshCommand , Commons.VM_NAMES[i] , command + " " +  String.valueOf(i) + " > $HOME/grep.out 2>&1 & " }); 
 		}				
 		
