@@ -17,6 +17,7 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 	private int 	   				m_nNodeIndex;
 	private FileProcessing 			m_oFileProcessing;
 	private int 					m_nDoneProcessingNumber = 0;
+	private int						m_nReceivedDataNumber = 0;
 	private final Object 			m_oLock;
 	private String [] 				m_sGrepOutputData;
 	
@@ -70,6 +71,20 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		
 		System.out.println("Receiving data from node " + String.valueOf(nodeIndex));
 		m_sGrepOutputData[nodeIndex] = data;
+		synchronized (m_oLock) {
+			m_nReceivedDataNumber = m_nReceivedDataNumber + 1;
+		}
+		System.out.println("Received data from : "+String.valueOf(m_nReceivedDataNumber));		
+		if(m_nReceivedDataNumber == 7) {
+			
+			System.out.println("Printing data : ");
+			for(int i=0; i<7; i++)
+			{
+				System.out.println("Node number : "+String.valueOf(i));
+				System.out.println(m_sGrepOutputData[i]);
+			}
+			
+		}
 		//System.out.println(data);
 		//Commons.SystemCommand(new String[] {  "echo ", myFile, " > $HOME/log"+nodeIndex+".txt &" }); 
 	}
@@ -87,20 +102,6 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 	public void doneProcessing(int nodeIndex) throws TException {
 		
 		System.out.println("Received doneProccessing message from node " + String.valueOf(nodeIndex));
-		synchronized (m_oLock) {
-			m_nDoneProcessingNumber = m_nDoneProcessingNumber + 1;
-		}
-		System.out.println("Number of done processing : "+String.valueOf(m_nDoneProcessingNumber));		
-		if(m_nDoneProcessingNumber == 7) {
-			
-			System.out.println("Printing data : ");
-			for(int i=0; i<7; i++)
-			{
-				System.out.println("Node number : "+String.valueOf(i));
-				System.out.println(m_sGrepOutputData[i]);
-			}
-			
-		}
 		return;
 	}
 
