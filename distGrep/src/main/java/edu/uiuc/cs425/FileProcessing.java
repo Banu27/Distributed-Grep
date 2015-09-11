@@ -75,8 +75,8 @@ public class FileProcessing {
 	    		while ((line = lineReader.readLine()) != null) {
 	    			if (matcher.find()) {
 	    				matcher.reset(line); //reset the input
-	    				output = output + String.valueOf(lineReader.getLineNumber()) +" "+ line + "\n";
-	    				System.out.println(line);
+	    				output = output + line ;//String.valueOf(lineReader.getLineNumber()) +" "+ line + "\n";
+	    				//System.out.println(line);
 	    			}
 	    		}
 	    } catch (IOException ex){
