@@ -41,7 +41,7 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		
 		System.out.println("Received startProccessing request");
 		//Call the file search
-		m_oFileProcessing.StartSearching();
+		m_oFileProcessing.StartSearching(pattern);
 		m_oMasterProxy.doneProcessing(m_nNodeIndex);
 		sendOutputHelper(); //Calls Send Output		
 	}
@@ -102,6 +102,8 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 	public void doneProcessing(int nodeIndex) throws TException {
 		
 		System.out.println("Received doneProccessing message from node " + String.valueOf(nodeIndex));
+		//ADD STUFF TO CALL FOR DATA TRANSFER
+		
 		return;
 	}
 

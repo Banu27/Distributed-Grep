@@ -52,7 +52,7 @@ public class App
 		for( int i=0; i<Commons.NUMBER_OF_VMS; i++) {
 			try
 			{
-				m_oClients[i].startProcessing("some_pattern");
+				m_oClients[i].startProcessing("(\\d)");
 			} catch (TException e)
 			{
 				e.printStackTrace();
