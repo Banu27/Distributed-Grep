@@ -77,7 +77,7 @@ public class FileProcessing {
 	    			lineNumber = lineNumber + 1;
 	    			if (matcher.find()) {
 	    				matcher.reset(line); //reset the input
-	    				output = output + String.valueOf(lineNumber) + line + "\\n";
+	    				output = output + String.valueOf(lineNumber) +" "+ line + "\n";
 	    			}
 	    		}
 	    } catch (IOException ex){
