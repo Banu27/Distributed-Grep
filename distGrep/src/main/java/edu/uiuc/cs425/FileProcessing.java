@@ -68,16 +68,15 @@ public class FileProcessing {
 	    Matcher matcher = regexp.matcher("");
 	    String output = "";
 	    Path path = Paths.get("/home/muthkmr2/logs",fileName);
-	    int lineNumber = 0;
 	    try {
 	    		BufferedReader reader = Files.newBufferedReader(path, m_oEncoding);
 	    		LineNumberReader lineReader = new LineNumberReader(reader);
 	    		String line = null;
 	    		while ((line = lineReader.readLine()) != null) {
-	    			lineNumber = lineNumber + 1;
 	    			if (matcher.find()) {
 	    				matcher.reset(line); //reset the input
-	    				output = output + String.valueOf(lineNumber) +" "+ line + "\n";
+	    				output = output + String.valueOf(lineReader.getLineNumber()) +" "+ line + "\n";
+	    				System.out.println(line);
 	    			}
 	    		}
 	    } catch (IOException ex){
