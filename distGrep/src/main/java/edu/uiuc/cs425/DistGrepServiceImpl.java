@@ -16,21 +16,20 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 	private CommClient 				m_oMasterProxy;
 	private int 	   				m_nNodeIndex;
 	private FileProcessing 			m_oFileProcessing;
-	private int 					m_nDoneProcessingNumber = 0;
-	private int						m_nReceivedDataNumber = 0;
-	private final Object 			m_oLock;
-	private String [] 				m_sGrepOutputData;
+	private Controller 				m_oControllerProxy;
 	
 	public DistGrepServiceImpl() {
 		m_oMasterProxy = null;
 		m_oFileProcessing = new FileProcessing();
 		m_oFileProcessing.Initialize(Commons.VM_NAMES[m_nNodeIndex]);
-		m_oLock = new Object();
-		m_sGrepOutputData = new String[7];
 	}
 
 	public void setMasterProxy(CommClient masterProxy) {
 		m_oMasterProxy = masterProxy;
+	}
+	
+	public void setControllerProxy(Controller controllerProxy) {
+		m_oControllerProxy = controllerProxy;
 	}
 	
 	public void setNodeID(int nodeID) {
@@ -42,11 +41,11 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		System.out.println("Received startProccessing request");
 		//Call the file search
 		String data = m_oFileProcessing.StartSearching(pattern);
-		m_oMasterProxy.doneProcessing(m_nNodeIndex);
-		sendOutputHelper(data); //Calls Send Output		
+		m_oMasterProxy.doneProcessing(m_nNodeIndex, data);
+		//sendOutputHelper(data); //Calls Send Output		
 	}
 	
-	public void sendOutputHelper(String data) {
+	/*public void sendOutputHelper(String data) {
 		try {
 			//byte[] encoded = Files.readAllBytes(Paths.get("./logs/grepResult.out"));
 			//String data = new String(encoded, Charset.defaultCharset());
@@ -56,8 +55,8 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		}		
 	}
 	
-	public void transferOutput(int nodeIndex, String data) throws TException {
 		
+	public void transferOutput(int nodeIndex, String data) throws TException {
 		System.out.println("Receiving data from node " + String.valueOf(nodeIndex));
 		m_sGrepOutputData[nodeIndex] = data;
 		synchronized (m_oLock) {
@@ -76,7 +75,7 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		}
 		//System.out.println(data);
 		//Commons.SystemCommand(new String[] {  "echo ", myFile, " > $HOME/log"+nodeIndex+".txt &" }); 
-	}
+	}*/
 	
 	public boolean isAlive() throws TException {
 		// TODO Auto-generated method stub
@@ -88,11 +87,10 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		return 0;
 	}
 
-	public void doneProcessing(int nodeIndex) throws TException {
+	public void doneProcessing(int nodeID, String data) throws TException {
 		
-		System.out.println("Received doneProccessing message from node " + String.valueOf(nodeIndex));
-		//ADD STUFF TO CALL FOR DATA TRANSFER
-		
+		System.out.println("Received doneProccessing message from node " + String.valueOf(nodeID));
+		m_oControllerProxy.setGrepOutputData(nodeID, data);
 		return;
 	}
 

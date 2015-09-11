@@ -117,11 +117,11 @@ public final class CommClient implements Iface {
 		return ret;
 	}
 
-	public void doneProcessing(int nodeID) throws TException {
+	public void doneProcessing(int nodeID, String data) throws TException {
 		
 		try
 		{
-			m_oProxy.doneProcessing(nodeID);
+			m_oProxy.doneProcessing(nodeID, data);
 			
 		}
 		catch (TException e)
@@ -130,7 +130,7 @@ public final class CommClient implements Iface {
 		}
 	}
 	
-	public void transferOutput(int nodeID, String data) throws TException {
+	/*public void transferOutput(int nodeID, String data) throws TException {
 		
 		try {
 			m_oProxy.transferOutput(nodeID, data);
@@ -139,5 +139,5 @@ public final class CommClient implements Iface {
 			e.printStackTrace();
 		}
 	}
-
+*/
 }

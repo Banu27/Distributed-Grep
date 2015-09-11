@@ -7,6 +7,5 @@ service DistributedGrep{
 	oneway void startProcessing(1:string pattern),
 	bool isAlive(),
 	int getProgress(),
-	oneway void doneProcessing(1:int nodeIndex ),
-	oneway void transferOutput(1: int nodeIndex, string data),
+	oneway void doneProcessing(1:int nodeIndex, 2:string data ),
 }

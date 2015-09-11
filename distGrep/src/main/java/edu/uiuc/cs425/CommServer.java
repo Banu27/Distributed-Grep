@@ -22,7 +22,7 @@ public final class CommServer implements Runnable{
 	
 	public CommServer(int nPort, int nNodeID)
 	{
-		this.m_nPort 	= nPort; 
+		m_nPort 		= nPort; 
 		m_oImpl			= null;
 		m_oServer       = null;
 		m_nNodeIndex    = nNodeID;
@@ -32,6 +32,12 @@ public final class CommServer implements Runnable{
 	public void setMasterProxy(CommClient masterProxy) {
 		
 		m_oImpl.setMasterProxy(masterProxy);		
+	}
+	
+	public void setControllerProxy(Controller controllerProxy) {
+		
+		m_oImpl.setControllerProxy(controllerProxy);
+		
 	}
 	
 	public int Initialize()

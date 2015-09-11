@@ -68,14 +68,16 @@ public class FileProcessing {
 	    Matcher matcher = regexp.matcher("");
 	    String output = "";
 	    Path path = Paths.get(fileName);
+	    int lineNumber = 0;
 	    try {
 	    		BufferedReader reader = Files.newBufferedReader(path, m_oEncoding);
 	    		LineNumberReader lineReader = new LineNumberReader(reader);
 	    		String line = null;
 	    		while ((line = lineReader.readLine()) != null) {
-	    			matcher.reset(line); //reset the input
+	    			lineNumber = lineNumber + 1;
 	    			if (matcher.find()) {
-	    				output = output + line;
+	    				matcher.reset(line); //reset the input
+	    				output = output + String.valueOf(lineNumber) + line + "\\n";
 	    			}
 	    		}
 	    } catch (IOException ex){
