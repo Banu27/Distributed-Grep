@@ -73,9 +73,9 @@ public class FileProcessing {
 	    		LineNumberReader lineReader = new LineNumberReader(reader);
 	    		String line = null;
 	    		while ((line = lineReader.readLine()) != null) {
-	    			System.out.println(line);
+	    			//System.out.println(line);
+	    			matcher.reset(line); //reset the input
 	    			if (matcher.find()) {
-	    				matcher.reset(line); //reset the input
 	    				output = output + line ;//String.valueOf(lineReader.getLineNumber()) +" "+ line + "\n";
 	    				//System.out.println(line);
 	    			}
