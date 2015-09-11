@@ -67,7 +67,7 @@ public class FileProcessing {
 	    Pattern regexp = Pattern.compile(pattern);
 	    Matcher matcher = regexp.matcher("");
 	    String output = "";
-	    Path path = Paths.get("src/logs",fileName);
+	    Path path = Paths.get("/home/muthkmr2/logs",fileName);
 	    int lineNumber = 0;
 	    try {
 	    		BufferedReader reader = Files.newBufferedReader(path, m_oEncoding);
