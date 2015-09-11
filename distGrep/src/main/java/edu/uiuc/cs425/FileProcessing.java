@@ -35,7 +35,7 @@ public class FileProcessing {
 	void Initialize(String VMName) {
 		
 		m_oLogFiles = new LinkedList<String>(); //Constructor needed??
-		m_oLogFiles.add("$HOME/logs/log1.txt"); //Add multiple files		
+		m_oLogFiles.add("log1.txt"); //Add multiple files		
 		m_sVMName = VMName;
 	}
 	
@@ -67,7 +67,7 @@ public class FileProcessing {
 	    Pattern regexp = Pattern.compile(pattern);
 	    Matcher matcher = regexp.matcher("");
 	    String output = "";
-	    Path path = Paths.get(fileName);
+	    Path path = Paths.get("src/logs",fileName);
 	    int lineNumber = 0;
 	    try {
 	    		BufferedReader reader = Files.newBufferedReader(path, m_oEncoding);
