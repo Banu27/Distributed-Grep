@@ -41,27 +41,16 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		
 		System.out.println("Received startProccessing request");
 		//Call the file search
-		m_oFileProcessing.StartSearching(pattern);
+		String data = m_oFileProcessing.StartSearching(pattern);
 		m_oMasterProxy.doneProcessing(m_nNodeIndex);
-		sendOutputHelper(); //Calls Send Output		
+		sendOutputHelper(data); //Calls Send Output		
 	}
 	
-	public void sendOutputHelper() {
+	public void sendOutputHelper(String data) {
 		try {
-			//System.out.println("Receiving data from node " + String.valueOf(nodeIndex));
-			try {
-
-				byte[] encoded = Files.readAllBytes(Paths.get("./logs/grepResult.out"));
-				String data = new String(encoded, Charset.defaultCharset());
-				m_oMasterProxy.transferOutput(m_nNodeIndex, data );
-				
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}			
-			//return data;
+			//byte[] encoded = Files.readAllBytes(Paths.get("./logs/grepResult.out"));
+			//String data = new String(encoded, Charset.defaultCharset());
+			m_oMasterProxy.transferOutput(m_nNodeIndex, data );
 		} catch (TException e) {
 			e.printStackTrace();
 		}		

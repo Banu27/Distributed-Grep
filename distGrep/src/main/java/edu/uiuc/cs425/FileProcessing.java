@@ -39,9 +39,10 @@ public class FileProcessing {
 		m_sVMName = VMName;
 	}
 	
-	void StartSearching(String pattern) {
+	String StartSearching(String pattern) {
 		
 		System.out.println("Start searching file/files");
+		String searchResult = new String();
 		while(!m_oLogFiles.isEmpty()) {
 			String fileName = m_oLogFiles.remove();
 			String username = "/home/muthkmr2";
@@ -53,12 +54,13 @@ public class FileProcessing {
 			//> "+username+"/logs/grepResult.out & " });			
 			System.out.println("grep call over"); //Why is this showing up on my command line??
 */		
-			String searchResult = findMatches(fileName,pattern);
+			searchResult = findMatches(fileName,pattern);			
 		}
+		return searchResult;
 		
 	}
 	
-	public String findMatches(String fileName, String pattern) {
+	String findMatches(String fileName, String pattern) {
 	    //Pattern and Matcher are used here, not String.matches(regexp),
 	    //since String.matches(regexp) would repeatedly compile the same
 	    //regular expression
