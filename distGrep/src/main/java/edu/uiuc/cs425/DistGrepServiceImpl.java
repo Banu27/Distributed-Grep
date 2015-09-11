@@ -90,6 +90,7 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 	public void doneProcessing(int nodeID, String data) throws TException {
 		
 		System.out.println("Received doneProccessing message from node " + String.valueOf(nodeID));
+		System.out.println("Data : " + data);
 		m_oControllerProxy.setGrepOutputData(nodeID, data);
 		return;
 	}
