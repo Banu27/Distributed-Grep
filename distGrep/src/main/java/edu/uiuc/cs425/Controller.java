@@ -13,12 +13,14 @@ public class Controller {
 	private String [] 				m_sGrepOutputData;
 	private final Object 			m_oLock;
 	private int 					m_nDoneProcessingNumber;	
+	private Scanner 				m_oUser_input; 
 	
 	Controller(int nodeID)	{
 		m_nNodeID = nodeID;
 		m_sGrepOutputData = new String[Commons.NUMBER_OF_VMS];
 		m_nDoneProcessingNumber = 0;
 		m_oLock = new Object();
+		m_oUser_input = new Scanner(System.in);
 		
 	}
 	
@@ -76,16 +78,14 @@ public class Controller {
 	
 	public void userOption() {		
 
-		Scanner user_input = new Scanner(System.in);
 		String input;
 		System.out.println("Enter 's' for new search or 'q' for quitting");
-		input = user_input.nextLine(); 
+		input = m_oUser_input.nextLine(); 
 
 		if(input.equals("s"))
 		{
 			System.out.println("Enter the pattern/string to search for : ");
-			String pattern = user_input.nextLine();
-			user_input.close();
+			String pattern = m_oUser_input.nextLine();
 			CallStartProcessing(pattern);
 		}	
 		return;
