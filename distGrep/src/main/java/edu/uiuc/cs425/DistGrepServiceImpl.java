@@ -44,40 +44,7 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		System.out.println("Data : " + data);
 		
 		m_oMasterProxy.doneProcessing(m_nNodeIndex, data);
-		//sendOutputHelper(data); //Calls Send Output		
 	}
-	
-	/*public void sendOutputHelper(String data) {
-		try {
-			//byte[] encoded = Files.readAllBytes(Paths.get("./logs/grepResult.out"));
-			//String data = new String(encoded, Charset.defaultCharset());
-			m_oMasterProxy.transferOutput(m_nNodeIndex, data );
-		} catch (TException e) {
-			e.printStackTrace();
-		}		
-	}
-	
-		
-	public void transferOutput(int nodeIndex, String data) throws TException {
-		System.out.println("Receiving data from node " + String.valueOf(nodeIndex));
-		m_sGrepOutputData[nodeIndex] = data;
-		synchronized (m_oLock) {
-			m_nReceivedDataNumber = m_nReceivedDataNumber + 1;
-		}
-		System.out.println("Received data from : "+String.valueOf(m_nReceivedDataNumber));		
-		if(m_nReceivedDataNumber == 7) {
-			
-			System.out.println("Printing data : ");
-			for(int i=0; i<7; i++)
-			{
-				System.out.println("Node number : "+String.valueOf(i));
-				System.out.println(m_sGrepOutputData[i]);
-			}
-			
-		}
-		//System.out.println(data);
-		//Commons.SystemCommand(new String[] {  "echo ", myFile, " > $HOME/log"+nodeIndex+".txt &" }); 
-	}*/
 	
 	public boolean isAlive() throws TException {
 		// TODO Auto-generated method stub

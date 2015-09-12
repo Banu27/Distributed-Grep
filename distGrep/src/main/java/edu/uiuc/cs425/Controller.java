@@ -1,5 +1,7 @@
 package edu.uiuc.cs425;
 
+import java.io.Console;
+
 import org.apache.thrift.TException;
 
 public class Controller {
@@ -53,12 +55,12 @@ public class Controller {
 		
 	}
 	
-	public void CallStartProcessing() {
+	public void CallStartProcessing(String pattern) {
 		
 		for( int i=0; i<Commons.NUMBER_OF_VMS; i++) {
 			try
 			{
-				m_oClients[i].startProcessing("(\\d)");
+				m_oClients[i].startProcessing(pattern);
 			} catch (TException e)
 			{
 				e.printStackTrace();
@@ -69,6 +71,24 @@ public class Controller {
 	public void WaitForServiceToStop() {
 	
 		m_oServer.WaitForServiceToStop();
+	}
+	
+	public void userOption() {		
+		while(true)
+    	{	String input;
+    		System.out.println("Enter 's' for new search or 'q' for quitting");
+    		Console console = System.console();
+    		input = console.readLine(); 
+    		if(input == "s")
+    		{
+    			System.out.println("Enter the pattern/string to search for : ");
+    			String pattern = console.readLine();
+    			CallStartProcessing(pattern);
+    		}
+    		else
+    			break;
+    	}
+		return;
 	}
 	
 	public void setGrepOutputData (int nodeID, String data ) {
@@ -130,7 +150,10 @@ public class Controller {
         m_oServer.setControllerProxy(this);
         
         if(m_nNodeID == Commons.MASTER)
-        	CallStartProcessing();
+        {	
+        	userOption();	
+        }
+        
+        //Exit gracefully
 	}
-	
 }
