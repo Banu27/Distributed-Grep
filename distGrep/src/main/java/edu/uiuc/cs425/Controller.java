@@ -77,22 +77,16 @@ public class Controller {
 	public void userOption() {		
 
 		Scanner user_input = new Scanner(System.in);
-		while(true)
-    	{	String input;
-    		System.out.println("Enter 's' for new search or 'q' for quitting");
-    		input = user_input.next(); 
-    		
-    		if(input.equals("s"))
-    		{
-    			System.out.println("Enter the pattern/string to search for : ");
-    			String pattern = user_input.next();
-    			CallStartProcessing(pattern);
-    		}
-    		else
-    		{
-    			break;
-    		}   		
-    	}
+		String input;
+		System.out.println("Enter 's' for new search or 'q' for quitting");
+		input = user_input.next(); 
+
+		if(input.equals("s"))
+		{
+			System.out.println("Enter the pattern/string to search for : ");
+			String pattern = user_input.next();
+			CallStartProcessing(pattern);
+		}	
 		user_input.close();
 		return;
 	}
@@ -103,15 +97,19 @@ public class Controller {
 			m_nDoneProcessingNumber = m_nDoneProcessingNumber + 1;
 		}
 		if(m_nDoneProcessingNumber == Commons.NUMBER_OF_VMS) {
-			System.out.println("Printing data : ");
-			for(int i=0; i<Commons.NUMBER_OF_VMS; i++)
-			{
-				System.out.println("Node number : "+String.valueOf(i));
-				System.out.println(m_sGrepOutputData[i]);
-			}		
-		}	
-	
+			printGrepOutput();
+		}
 	}
+	
+	public void printGrepOutput() {
+		
+		System.out.println("Printing data : ");
+		for(int i=0; i<Commons.NUMBER_OF_VMS; i++) {
+			System.out.println("Node number : "+String.valueOf(i));
+			System.out.println(m_sGrepOutputData[i]);
+		}
+		userOption();
+	}	
 	
 	//Closes client transport
 	public void CloseClients() {
