@@ -82,7 +82,7 @@ public class Controller {
     		System.out.println("Enter 's' for new search or 'q' for quitting");
     		input = user_input.next(); 
     		
-    		if(input == "s")
+    		if(input.equals("s"))
     		{
     			System.out.println("Enter the pattern/string to search for : ");
     			String pattern = user_input.next();
