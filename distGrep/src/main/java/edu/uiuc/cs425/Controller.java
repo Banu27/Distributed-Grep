@@ -1,6 +1,7 @@
 package edu.uiuc.cs425;
 
 import java.io.Console;
+import java.util.Scanner;
 
 import org.apache.thrift.TException;
 
@@ -74,20 +75,25 @@ public class Controller {
 	}
 	
 	public void userOption() {		
+
+		Scanner user_input = new Scanner(System.in);
 		while(true)
     	{	String input;
     		System.out.println("Enter 's' for new search or 'q' for quitting");
-    		Console console = System.console();
-    		input = console.readLine(); 
+    		input = user_input.next(); 
+    		
     		if(input == "s")
     		{
     			System.out.println("Enter the pattern/string to search for : ");
-    			String pattern = console.readLine();
+    			String pattern = user_input.next();
     			CallStartProcessing(pattern);
     		}
     		else
+    		{
     			break;
+    		}   		
     	}
+		user_input.close();
 		return;
 	}
 	
