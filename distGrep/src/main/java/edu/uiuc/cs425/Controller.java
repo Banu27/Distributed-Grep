@@ -85,9 +85,9 @@ public class Controller {
 		{
 			System.out.println("Enter the pattern/string to search for : ");
 			String pattern = user_input.next();
+			user_input.close();
 			CallStartProcessing(pattern);
 		}	
-		user_input.close();
 		return;
 	}
 	
