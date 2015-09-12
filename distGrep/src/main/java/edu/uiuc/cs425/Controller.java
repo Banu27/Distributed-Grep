@@ -60,6 +60,7 @@ public class Controller {
 	
 	public void CallStartProcessing(String pattern) {
 		
+		m_nDoneProcessingNumber = 0;
 		for( int i=0; i<Commons.NUMBER_OF_VMS; i++) {
 			try
 			{
