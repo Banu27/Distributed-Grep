@@ -20,6 +20,7 @@ public final class Commons {
 			"fa15-cs425-g01-06.cs.illinois.edu",
 			"fa15-cs425-g01-07.cs.illinois.edu" };
 	public static final String username = "muthkmr2";
+	public static int aliveNumber = 7;
 	
 	public static void SystemCommand(String[] command) {
 		

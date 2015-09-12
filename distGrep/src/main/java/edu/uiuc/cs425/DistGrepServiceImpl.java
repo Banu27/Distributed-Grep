@@ -48,7 +48,7 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 	
 	public boolean isAlive() throws TException {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public int getProgress() throws TException {

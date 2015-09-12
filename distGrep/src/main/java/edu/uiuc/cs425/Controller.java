@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import org.apache.thrift.TException;
 
-public class Controller {
+public class Controller implements Runnable {
 	private CommClient [] 			m_oClients;
 	private  CommClient 			m_oMasterProxy;
 	private  CommServer 			m_oServer;
@@ -20,8 +20,12 @@ public class Controller {
 		m_sGrepOutputData = new String[Commons.NUMBER_OF_VMS];
 		m_nDoneProcessingNumber = 0;
 		m_oLock = new Object();
-		m_oUser_input = new Scanner(System.in);
-		
+		m_oUser_input = new Scanner(System.in);		
+	}
+	
+	public void pingMachines() {
+		Thread ping = new Thread();
+		ping.start();
 	}
 	
 	public void RunExecutables() {
@@ -97,7 +101,7 @@ public class Controller {
 		synchronized (m_oLock) {
 			m_nDoneProcessingNumber = m_nDoneProcessingNumber + 1;
 		}
-		if(m_nDoneProcessingNumber == Commons.NUMBER_OF_VMS) {
+		if(m_nDoneProcessingNumber == Commons.aliveNumber) {
 			printGrepOutput();
 		}
 	}
@@ -156,9 +160,36 @@ public class Controller {
         
         if(m_nNodeID == Commons.MASTER)
         {	
-        	userOption();	
-        }
-        
+        	userOption();
+        	CloseClients();
+        	
+        }        
         //Exit gracefully
+	}
+
+	public void run() {
+		// TODO Auto-generated method stub
+		int aliveNumber=0;
+		while(true) {
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			for(int i=0; i< Commons.NUMBER_OF_VMS; i++) {
+				try {
+					m_oClients[i].isAlive();
+					aliveNumber = aliveNumber + 1;
+				} catch (TException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if(aliveNumber != Commons.NUMBER_OF_VMS)
+				{
+					Commons.aliveNumber = aliveNumber;
+				}
+			}			
+		}
 	}
 }
