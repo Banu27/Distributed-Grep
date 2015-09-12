@@ -41,7 +41,7 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		System.out.println("Received startProccessing request");
 		//Call the file search
 		String data = m_oFileProcessing.StartSearching(pattern);
-		System.out.println("Data : " + data);
+		//System.out.println("Data : " + data);
 		
 		m_oMasterProxy.doneProcessing(m_nNodeIndex, data);
 	}

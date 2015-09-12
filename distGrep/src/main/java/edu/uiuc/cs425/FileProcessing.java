@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
 
 public class FileProcessing {
 	
-	Queue<String> 			m_oLogFiles;
     private String 			m_sVMName;
     final static Charset 	m_oEncoding= StandardCharsets.UTF_8;
 	
@@ -34,8 +33,6 @@ public class FileProcessing {
 	
 	void Initialize(String VMName) {
 		
-		m_oLogFiles = new LinkedList<String>(); //Constructor needed??
-		m_oLogFiles.add("log1.txt"); //Add multiple files		
 		m_sVMName = VMName;
 	}
 	
@@ -43,11 +40,10 @@ public class FileProcessing {
 		
 		System.out.println("Start searching file/files");
 		String searchResult = new String();
-		while(!m_oLogFiles.isEmpty()) {
-			String fileName = m_oLogFiles.remove();
-			String username = "/home/muthkmr2";
-			searchResult = findMatches(fileName,pattern);			
-		}
+		String fileName = "log1.txt";
+		String username = "/home/muthkmr2";
+		searchResult = findMatches(fileName,pattern);			
+
 		return searchResult;
 		
 	}
