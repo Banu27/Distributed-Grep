@@ -162,7 +162,7 @@ public class AppTest {
 	@Test
 	public void testRegEx1() throws InterruptedException {
 		System.out.println("testRegEx1");
-		m_oController.CallStartProcessing("\\b\\w+(ithme\\b)");
+		m_oController.CallStartProcessing(".*metic");
 
 		while(m_oController.isRunning())
 		{
