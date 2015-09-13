@@ -17,6 +17,7 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 	private int 	   				m_nNodeIndex;
 	private FileProcessing 			m_oFileProcessing;
 	private Controller 				m_oControllerProxy;
+	private String 					m_sDirPath;
 	
 	public DistGrepServiceImpl() {
 		m_oMasterProxy = null;
@@ -32,6 +33,12 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		m_oControllerProxy = controllerProxy;
 	}
 	
+	public void setSearchDir(String path)
+	{
+		m_sDirPath = path;
+	}
+	
+	
 	public void setNodeID(int nodeID) {
 		m_nNodeIndex = nodeID;
 	}
@@ -40,10 +47,13 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		
 		System.out.println("Received startProccessing request");
 		//Call the file search
-		String data = m_oFileProcessing.StartSearching(pattern);
+		m_oFileProcessing.Reset();
+		m_oFileProcessing.StartSearching(pattern,m_sDirPath);
+		String data = m_oFileProcessing.GetMatchedLines();
+		int count = m_oFileProcessing.GetLineCount();
 		//System.out.println("Data : " + data);
 		
-		m_oMasterProxy.doneProcessing(m_nNodeIndex, data);
+		m_oMasterProxy.doneProcessing(m_nNodeIndex, data, count);
 	}
 	
 	public boolean isAlive() throws TException {
@@ -56,11 +66,11 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		return 0;
 	}
 
-	public void doneProcessing(int nodeID, String data) throws TException {
+	public void doneProcessing(int nodeID, String data, int count) throws TException {
 		
 		System.out.println("Received doneProccessing message from node " + String.valueOf(nodeID));
 		//System.out.println("Data : " + data);
-		m_oControllerProxy.setGrepOutputData(nodeID, data);
+		m_oControllerProxy.setGrepOutputData(nodeID, data, count);
 		return;
 	}
 

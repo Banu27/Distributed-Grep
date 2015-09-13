@@ -40,6 +40,11 @@ public final class CommServer implements Runnable{
 		
 	}
 	
+	public void setSearchDir(String path)
+	{
+		m_oImpl.setSearchDir(path);
+	}
+	
 	public int Initialize()
 	{
 		try 

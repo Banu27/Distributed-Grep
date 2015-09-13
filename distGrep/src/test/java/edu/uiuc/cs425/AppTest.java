@@ -18,22 +18,38 @@ public class AppTest {
 
 	static final int SEARCH_STRNG_INDEX = 0;
 
-	public static boolean SetupServices() {
+	static Controller m_oController = null;
+	
+	static final String[] WORD_LIST_INFREQUENT = { "fashionable", "possession", "shiners", "trample", "toolshed", "emotionless",
+			"gum", "educate", "bewildered", "obese", "fancy", "shiners", "languid", "minister", "seashore",
+			"disagree", "bells", "drink", "upbeat", "nasty", "consist", "atrocity", "eastern", "dent", "dreamless",
+			"mortal", "element", "thief", "obsession", "borrow", "alignment", "believable", "fake",
+			"accomplice", "accidental", "convertible", "atrocity", "guide", "hangover", "became" };
 
+	static final String[] WORD_LIST_MID_FREQUENT = { "groundwave", "fetish", "historic", "nice", "think", "astounding",
+			"round", "position", "approximation", "infinite", "desolate", "bludgeon", "hunter", "hundred",
+			"pink", "annoying", "prophetic", "entity", "pastoral", "degrading" };
+
+	static final String[] WORD_LIST_FREQUENT = { "arithmetic", "disgusting", "imported", "wrench", "invention" };
+	
+	public static boolean SetupServices() {
+		m_oController = new Controller(Commons.MASTER);
+		if(m_oController.StartServer() == Commons.FAILURE)
+        {
+        	System.out.println("Failed to bring the distributed grep service up. Shutting down ...");
+        	System.exit(Commons.FAILURE);
+        }
+        
+        if(Commons.FAILURE == m_oController.SetupConnections())
+        {
+        	System.out.println("Connection amoung VMs failed, Shutting down ...");
+        	System.exit(Commons.FAILURE);
+        }
+		return true;
 	}
 
 	public static boolean SetupLogs() {
-		final String[] WORD_LIST_INFREQUENT = { "borrow", "possession", "shiners", "trample", "toolshed", "emotionless",
-				"gum", "educate", "bewildered", "obese", "fancy", "shiners", "languid", "minister", "seashore",
-				"disagree", "bells", "drink", "upbeat", "nasty", "consist", "atrocity", "eastern", "dent", "dreamless",
-				"mortal", "element", "thief", "obsession", "fashionable", "alignment", "believable", "fake",
-				"accomplice", "accidental", "convertible", "atrocity", "guide", "hangover", "became" };
-
-		final String[] WORD_LIST_MID_FREQUENT = { "round", "fetish", "historic", "nice", "think", "astounding",
-				"groundwave", "position", "approximation", "infinite", "desolate", "bludgeon", "hunter", "hundred",
-				"pink", "annoying", "prophetic", "entity", "pastoral", "degrading" };
-
-		final String[] WORD_LIST_FREQUENT = { "round", "fetish", "historic", "nice", "think" };
+		
 
 		final int nFiles = Commons.NUMBER_OF_VMS;
 		final int nLinesPerFile = 1000;
@@ -101,10 +117,71 @@ public class AppTest {
 
 	}
 
-	String message = "Hello World";
 
 	@Test
-	public void testPrintMessage() {
-		assertEquals(message, messageUtil.printMessage());
+	public void testFreq() {
+		m_oController.CallStartProcessing(WORD_LIST_FREQUENT[SEARCH_STRNG_INDEX]);
+		while(m_oController.isRunning())
+		{
+			Thread.sleep(3000);
+		}
+		
+		assertEquals(nFreqCount,m_oController.GetMatchCount());
 	}
+	
+	@Test
+	public void testMidFreq() {
+		m_oController.CallStartProcessing(WORD_LIST_MID_FREQUENT[SEARCH_STRNG_INDEX]);
+		while(m_oController.isRunning())
+		{
+			Thread.sleep(3000);
+		}
+		
+		assertEquals(nMidFreqCount,m_oController.GetMatchCount());
+	}
+	
+	@Test
+	public void testInFreq() {
+		m_oController.CallStartProcessing(WORD_LIST_INFREQUENT[SEARCH_STRNG_INDEX]);
+		while(m_oController.isRunning())
+		{
+			Thread.sleep(3000);
+		}
+		
+		assertEquals(nInFreqCount,m_oController.GetMatchCount());
+	}
+	
+	@Test
+	public void testRegEx1() {
+		m_oController.CallStartProcessing("*ithme*");
+		while(m_oController.isRunning())
+		{
+			Thread.sleep(3000);
+		}
+		
+		assertEquals(nFreqCount,m_oController.GetMatchCount());
+	}
+	
+	@Test
+	public void testRegEx2() {
+		m_oController.CallStartProcessing("groun.wave");
+		while(m_oController.isRunning())
+		{
+			Thread.sleep(3000);
+		}
+		
+		assertEquals(nMidFreqCount,m_oController.GetMatchCount());
+	}
+	
+	@Test
+	public void testRegEx3() {
+		m_oController.CallStartProcessing("^fas");
+		while(m_oController.isRunning())
+		{
+			Thread.sleep(3000);
+		}
+		
+		assertEquals(nInFreqCount,m_oController.GetMatchCount());
+	}
+	
 }

@@ -1,5 +1,6 @@
 package edu.uiuc.cs425;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.nio.charset.Charset;
@@ -13,12 +14,25 @@ import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 public class FileProcessing {
 	
     private String 			m_sVMName;
     final static Charset 	m_oEncoding= StandardCharsets.UTF_8;
+	private String 			m_sSearchResult;
+	private int				m_nCount;
 	
+	public FileProcessing()
+	{
+		m_nCount = 0;
+	}
     
+	public void Reset()
+	{
+		m_nCount = 0;
+		m_sSearchResult = "";
+	}
+	
 	int GetProgress() {
 		System.out.println("Returning progress");
 		return 0;
@@ -36,26 +50,39 @@ public class FileProcessing {
 		m_sVMName = VMName;
 	}
 	
-	String StartSearching(String pattern) {
-		
-		System.out.println("Start searching file/files");
-		String searchResult = new String();
-		String fileName = "log1.txt";
-		String username = "/home/muthkmr2";
-		searchResult = findMatches(fileName,pattern);			
+	int StartSearching(String pattern, String dirPath) {
+		File directory = new File(dirPath);
 
-		return searchResult;
-		
+	    // get all the files from a directory
+	    File[] fList = directory.listFiles();
+	    for (File file : fList) {
+	        if (file.isFile()) {
+				System.out.println("Start searching " + file.getAbsolutePath());
+				m_sSearchResult += findMatches(file.getAbsolutePath(),pattern);
+	        }
+	    }
+        return Commons.SUCCESS;
 	}
 	
-	String findMatches(String fileName, String pattern) {
+	String GetMatchedLines()
+	{
+		return m_sSearchResult;
+	}
+	
+	int GetLineCount()
+	{
+		return m_nCount;
+	}
+	
+	
+	String findMatches(String filePath, String pattern) {
 	    //Pattern and Matcher are used here, not String.matches(regexp),
 	    //since String.matches(regexp) would repeatedly compile the same
 	    //regular expression
 	    Pattern regexp = Pattern.compile(pattern);
 	    Matcher matcher = regexp.matcher("");
 	    String output = "";
-	    Path path = Paths.get("/home/muthkmr2/logs",fileName);
+	    Path path = Paths.get(filePath);
 	    try {
 	    		BufferedReader reader = Files.newBufferedReader(path, m_oEncoding);
 	    		LineNumberReader lineReader = new LineNumberReader(reader);
@@ -63,6 +90,7 @@ public class FileProcessing {
 	    		while ((line = lineReader.readLine()) != null) {
 	    			matcher.reset(line); //reset the input
 	    			if (matcher.find()) {
+	    				m_nCount++;
 	    				output = output + String.valueOf(lineReader.getLineNumber()) +" "+ line + "\n";
 	    			}
 	    		}

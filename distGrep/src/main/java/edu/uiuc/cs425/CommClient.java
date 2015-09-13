@@ -117,11 +117,11 @@ public final class CommClient implements Iface {
 		return ret;
 	}
 
-	public void doneProcessing(int nodeID, String data) throws TException {
+	public void doneProcessing(int nodeID, String data, int count) throws TException {
 		
 		try
 		{
-			m_oProxy.doneProcessing(nodeID, data);
+			m_oProxy.doneProcessing(nodeID, data, count);
 			
 		}
 		catch (TException e)
