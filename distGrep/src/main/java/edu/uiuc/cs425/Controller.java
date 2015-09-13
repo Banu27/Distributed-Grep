@@ -20,6 +20,7 @@ public class Controller implements Runnable {
 	private String					m_sSearchDir;
 	private long					m_lStartTime;
 	private	boolean					m_bAskOnce;
+	private Thread 					m_oHealthMonitorThread;
 	
 	Controller(int nodeID, String searchDir)	{
 		m_nNodeID = nodeID;
@@ -227,6 +228,11 @@ public class Controller implements Runnable {
         m_oServer.setMasterProxy(m_oMasterProxy);
         m_oServer.setControllerProxy(this);
         m_oServer.setSearchDir(m_sSearchDir);
+        if(m_nNodeID == Commons.MASTER)
+        {	
+        	m_oHealthMonitorThread = new Thread(this);
+        	m_oHealthMonitorThread.start();
+        }
         
         return Commons.SUCCESS;
 	}
