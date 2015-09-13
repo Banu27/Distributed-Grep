@@ -19,6 +19,7 @@ public class Controller implements Runnable {
 	private int 					m_nPatternMatchCount;
 	private String					m_sSearchDir;
 	private long					m_lStartTime;
+	private	boolean					m_bAskOnce;
 	
 	Controller(int nodeID, String searchDir)	{
 		m_nNodeID = nodeID;
@@ -30,6 +31,12 @@ public class Controller implements Runnable {
 		m_nPatternMatchCount = 0;
 		m_sSearchDir = searchDir;
 		m_lStartTime = 0;
+		m_bAskOnce = false;
+	}
+	
+	public void setAskOnce()
+	{
+		m_bAskOnce = true;
 	}
 	
 	public int GetMatchCount()
@@ -153,7 +160,7 @@ public class Controller implements Runnable {
 			m_bIsRunning = false;
 			printGrepOutput();
 			System.out.println("Query time: " + String.valueOf(System.currentTimeMillis() - m_lStartTime) + "ms");
-			if( Commons.FAILURE == startGrep())
+			if( !m_bAskOnce && Commons.FAILURE == startGrep())
 			{
 				System.out.println("Failed to successfully start Grepping. Shutting down ...");
 				ExitApp();

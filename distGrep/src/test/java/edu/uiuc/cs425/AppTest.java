@@ -37,6 +37,7 @@ public class AppTest {
 	
 	public static boolean SetupServices() {
 		m_oController = new Controller(Commons.MASTER, sDirPath);
+		m_oController.setAskOnce();
 		if(m_oController.StartServer() == Commons.FAILURE)
         {
         	System.out.println("Failed to bring the distributed grep service up. Shutting down ...");
@@ -106,6 +107,7 @@ public class AppTest {
 
 	@BeforeClass
 	public static void SetupTest() {
+		
 		if (!SetupLogs()) {
 			System.out.println(
 					"Setting up synthetic logs failed. Tests will exit. Restart after " + "resolving the problem.");
