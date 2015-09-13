@@ -147,7 +147,7 @@ public class AppTest {
 		}
 		
 		assertEquals(nMidFreqCount,m_oController.GetMatchCount());
-		System.out.println("Expected:" + String.valueOf(nFreqCount) + " Actual: " +  
+		System.out.println("Expected:" + String.valueOf(nMidFreqCount) + " Actual: " +  
 				String.valueOf(m_oController.GetMatchCount()) );
 	}
 	
@@ -161,7 +161,7 @@ public class AppTest {
 		}
 		
 		assertEquals(nInFreqCount,m_oController.GetMatchCount());
-		System.out.println("Expected:" + String.valueOf(nFreqCount) + " Actual: " +  
+		System.out.println("Expected:" + String.valueOf(nInFreqCount) + " Actual: " +  
 				String.valueOf(m_oController.GetMatchCount()) );
 	}
 	
@@ -190,7 +190,7 @@ public class AppTest {
 		}
 		
 		assertEquals(nMidFreqCount,m_oController.GetMatchCount());
-		System.out.println("Expected:" + String.valueOf(nFreqCount) + " Actual: " +  
+		System.out.println("Expected:" + String.valueOf(nMidFreqCount) + " Actual: " +  
 				String.valueOf(m_oController.GetMatchCount()) );
 	}
 	
@@ -204,7 +204,7 @@ public class AppTest {
 		}
 		
 		assertEquals(nInFreqCount,m_oController.GetMatchCount());
-		System.out.println("Expected:" + String.valueOf(nFreqCount) + " Actual: " +  
+		System.out.println("Expected:" + String.valueOf(nInFreqCount) + " Actual: " +  
 				String.valueOf(m_oController.GetMatchCount()) );
 	}
 	
