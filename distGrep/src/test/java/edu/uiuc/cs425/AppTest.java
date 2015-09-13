@@ -15,7 +15,7 @@ public class AppTest {
 	static int nInFreqCount;
 	static int nMidFreqCount;
 	static int nFreqCount;
-
+	static final String sDirPath = "$HOME/test";
 	static final int SEARCH_STRNG_INDEX = 0;
 
 	static Controller m_oController = null;
@@ -33,7 +33,7 @@ public class AppTest {
 	static final String[] WORD_LIST_FREQUENT = { "arithmetic", "disgusting", "imported", "wrench", "invention" };
 	
 	public static boolean SetupServices() {
-		m_oController = new Controller(Commons.MASTER);
+		m_oController = new Controller(Commons.MASTER, sDirPath);
 		if(m_oController.StartServer() == Commons.FAILURE)
         {
         	System.out.println("Failed to bring the distributed grep service up. Shutting down ...");
@@ -119,7 +119,7 @@ public class AppTest {
 
 
 	@Test
-	public void testFreq() {
+	public void testFreq() throws InterruptedException {
 		m_oController.CallStartProcessing(WORD_LIST_FREQUENT[SEARCH_STRNG_INDEX]);
 		while(m_oController.isRunning())
 		{
@@ -130,7 +130,7 @@ public class AppTest {
 	}
 	
 	@Test
-	public void testMidFreq() {
+	public void testMidFreq() throws InterruptedException {
 		m_oController.CallStartProcessing(WORD_LIST_MID_FREQUENT[SEARCH_STRNG_INDEX]);
 		while(m_oController.isRunning())
 		{
@@ -141,7 +141,7 @@ public class AppTest {
 	}
 	
 	@Test
-	public void testInFreq() {
+	public void testInFreq() throws InterruptedException {
 		m_oController.CallStartProcessing(WORD_LIST_INFREQUENT[SEARCH_STRNG_INDEX]);
 		while(m_oController.isRunning())
 		{
@@ -152,7 +152,7 @@ public class AppTest {
 	}
 	
 	@Test
-	public void testRegEx1() {
+	public void testRegEx1() throws InterruptedException {
 		m_oController.CallStartProcessing("*ithme*");
 		while(m_oController.isRunning())
 		{
@@ -163,7 +163,7 @@ public class AppTest {
 	}
 	
 	@Test
-	public void testRegEx2() {
+	public void testRegEx2() throws InterruptedException {
 		m_oController.CallStartProcessing("groun.wave");
 		while(m_oController.isRunning())
 		{
@@ -174,7 +174,7 @@ public class AppTest {
 	}
 	
 	@Test
-	public void testRegEx3() {
+	public void testRegEx3() throws InterruptedException {
 		m_oController.CallStartProcessing("^fas");
 		while(m_oController.isRunning())
 		{
