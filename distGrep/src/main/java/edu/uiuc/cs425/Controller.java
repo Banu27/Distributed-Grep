@@ -18,6 +18,7 @@ public class Controller implements Runnable {
 	private boolean					m_bIsRunning;
 	private int 					m_nPatternMatchCount;
 	private String					m_sSearchDir;
+	private long					m_lStartTime;
 	
 	Controller(int nodeID, String searchDir)	{
 		m_nNodeID = nodeID;
@@ -28,6 +29,7 @@ public class Controller implements Runnable {
 		m_bIsRunning = false;
 		m_nPatternMatchCount = 0;
 		m_sSearchDir = searchDir;
+		m_lStartTime = 0;
 	}
 	
 	public int GetMatchCount()
@@ -93,6 +95,7 @@ public class Controller implements Runnable {
 		m_nDoneProcessingNumber = 0;
 		m_bIsRunning = true;
 		m_nPatternMatchCount = 0;
+		m_lStartTime = System.currentTimeMillis();
 		for( int i=0; i<Commons.NUMBER_OF_VMS; i++) {
 			try
 			{
@@ -149,12 +152,14 @@ public class Controller implements Runnable {
 		if(m_nDoneProcessingNumber == Commons.aliveNumber) {
 			m_bIsRunning = false;
 			printGrepOutput();
+			System.out.println("Query time: " + String.valueOf(System.currentTimeMillis() - m_lStartTime) + "ms");
 			if( Commons.FAILURE == startGrep())
 			{
 				System.out.println("Failed to successfully start Grepping. Shutting down ...");
 				ExitApp();
 			}
 		}
+		
 	}
 	
 	public void printGrepOutput() {
@@ -164,6 +169,7 @@ public class Controller implements Runnable {
 			System.out.println("Node number : "+String.valueOf(i));
 			System.out.println(m_sGrepOutputData[i]);
 		}
+		System.out.println("Total Lines: "+ String.valueOf(m_nPatternMatchCount));
 		
 	}	
 	

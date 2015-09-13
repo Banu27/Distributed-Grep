@@ -3,11 +3,14 @@ package edu.uiuc.cs425;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
 import java.util.Random;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
 public class AppTest {
@@ -182,6 +185,13 @@ public class AppTest {
 		}
 		
 		assertEquals(nInFreqCount,m_oController.GetMatchCount());
+	}
+	
+	@AfterClass
+	public void CleanUp()
+	{
+		for (int file = 0; file < Commons.NUMBER_OF_VMS; ++file) {
+			boolean success = (new File(String.valueOf(file) + ".txt")).delete();
 	}
 	
 }
