@@ -5,6 +5,7 @@ import java.util.Scanner;
 import java.util.Vector;
 
 import org.apache.thrift.TException;
+import org.apache.thrift.transport.TTransportException;
 
 public class Controller implements Runnable {
 	private CommClient [] 			m_oClients;
@@ -272,12 +273,15 @@ public class Controller implements Runnable {
 				{
 					try {
 						m_oClients[i].isAlive();
-					} catch (Exception e) {
+					} catch (TTransportException e) {
 						System.err.println("Failed to receive heartbeat message from " + Commons.VM_NAMES[i]
 								+ " .Considered dead.");
 						failedNodes.add(i);
 						Commons.aliveNumber--;
 						
+					} catch (TException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
 				
