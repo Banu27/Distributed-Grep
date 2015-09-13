@@ -268,16 +268,17 @@ public class Controller implements Runnable {
 				e.printStackTrace();
 			}
 			for(int i=0; i< Commons.NUMBER_OF_VMS; i++) {
-				if(failedNodes.contains(i))
-					continue;
-				try {
-					m_oClients[i].isAlive();
-				} catch (TException e) {
-					System.out.print("Failed to receive heartbeat message from " + Commons.VM_NAMES[i]
-							+ " .Considered dead.");
-					failedNodes.add(i);
-					Commons.aliveNumber--;
-					
+				if(!failedNodes.contains(i))
+				{
+					try {
+						m_oClients[i].isAlive();
+					} catch (Exception e) {
+						System.err.println("Failed to receive heartbeat message from " + Commons.VM_NAMES[i]
+								+ " .Considered dead.");
+						failedNodes.add(i);
+						Commons.aliveNumber--;
+						
+					}
 				}
 				
 			}			
