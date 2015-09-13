@@ -52,7 +52,7 @@ public class FileProcessing {
 	
 	int StartSearching(String pattern, String dirPath) {
 		File directory = new File(dirPath);
-
+	    System.out.println("Dir path: " + dirPath);
 	    // get all the files from a directory
 	    File[] fList = directory.listFiles();
 	    for (File file : fList) {
@@ -80,7 +80,7 @@ public class FileProcessing {
 	    //since String.matches(regexp) would repeatedly compile the same
 	    //regular expression
 	    Pattern regexp = Pattern.compile(pattern);
-	    Matcher matcher = regexp.matcher("");
+	    Matcher m = null;
 	    String output = "";
 	    Path path = Paths.get(filePath);
 	    try {
@@ -88,8 +88,8 @@ public class FileProcessing {
 	    		LineNumberReader lineReader = new LineNumberReader(reader);
 	    		String line = null;
 	    		while ((line = lineReader.readLine()) != null) {
-	    			matcher.reset(line); //reset the input
-	    			if (matcher.find()) {
+	    			m = regexp.matcher(line); //reset the input
+	    			if (m.find()) {
 	    				m_nCount++;
 	    				output = output + String.valueOf(lineReader.getLineNumber()) +": "+ line + "\n";
 	    			}

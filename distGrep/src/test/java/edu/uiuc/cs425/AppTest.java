@@ -18,7 +18,7 @@ public class AppTest {
 	static int nInFreqCount;
 	static int nMidFreqCount;
 	static int nFreqCount;
-	static final String sDirPath = "$HOME/test";
+	static final String sDirPath = "/home/ajayaku2/test";
 	static final int SEARCH_STRNG_INDEX = 0;
 
 	static Controller m_oController = null;
@@ -188,10 +188,13 @@ public class AppTest {
 	}
 	
 	@AfterClass
-	public void CleanUp()
+	static public void CleanUp()
 	{
-		for (int file = 0; file < Commons.NUMBER_OF_VMS; ++file) {
+		for (int file = 0; file < Commons.NUMBER_OF_VMS; ++file)
+		{ 
 			boolean success = (new File(String.valueOf(file) + ".txt")).delete();
+			if(!success) System.out.println("Failed to delete generated logs"); 
+		}
 	}
 	
 }
