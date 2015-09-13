@@ -272,17 +272,20 @@ public class Controller implements Runnable {
 				if(!failedNodes.contains(i))
 				{
 					try {
-						m_oClients[i].isAlive();
-					} catch (TTransportException e) {
-						System.err.println("Failed to receive heartbeat message from " + Commons.VM_NAMES[i]
-								+ " .Considered dead.");
-						failedNodes.add(i);
-						Commons.aliveNumber--;
-						
+						if(!m_oClients[i].isAlive())
+						{
+							System.err.println("Failed to receive heartbeat message from " + Commons.VM_NAMES[i]
+									+ " .Considered dead.");
+							failedNodes.add(i);
+							Commons.aliveNumber--;
+						}
 					} catch (TException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					 
+						
+					
 				}
 				
 			}			
