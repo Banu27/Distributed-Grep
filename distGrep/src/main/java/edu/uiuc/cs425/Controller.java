@@ -54,7 +54,7 @@ public class Controller implements Runnable {
 			
 		//Start all VMS
 		for (int i=1; i<Commons.NUMBER_OF_VMS; i++) 
-			Commons.SystemCommand(new String[] { sshCommand , Commons.VM_NAMES[i] , command + " " +  String.valueOf(i) + " > $HOME/grep.out 2>&1 & " }); 
+			Commons.SystemCommand(new String[] { sshCommand , Commons.VM_NAMES[i] , command + " " +  String.valueOf(i) + " " + m_sSearchDir  + " > $HOME/grep.out 2>&1 & " }); 
 				
 		
 	}
