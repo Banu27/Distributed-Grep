@@ -267,12 +267,12 @@ public class Controller implements Runnable {
 		//Diamonds are allowed in 7+
 		while(true) {
 			try {
-				Thread.sleep(3000);
+				Thread.sleep(7000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			for(int i=0; i< Commons.NUMBER_OF_VMS; i++) {
+			for(int i=1; i< Commons.NUMBER_OF_VMS; i++) {
 				if(!m_oFailedNodes.contains(i))
 				{
 					try {

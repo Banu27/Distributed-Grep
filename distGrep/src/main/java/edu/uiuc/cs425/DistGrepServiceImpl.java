@@ -53,7 +53,12 @@ public class DistGrepServiceImpl implements DistributedGrep.Iface {
 		int count = m_oFileProcessing.GetLineCount();
 		//System.out.println("Data : " + data);
 		
-		m_oMasterProxy.doneProcessing(m_nNodeIndex, data, count);
+		if(m_nNodeIndex == Commons.MASTER)
+		{
+			doneProcessing(m_nNodeIndex, data, count);
+		}	
+		else
+			m_oMasterProxy.doneProcessing(m_nNodeIndex, data, count);
 	}
 	
 	public boolean isAlive() throws TException {
