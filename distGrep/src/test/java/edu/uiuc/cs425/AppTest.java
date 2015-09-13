@@ -125,6 +125,7 @@ public class AppTest {
 
 	@Test
 	public void testFreq() throws InterruptedException {
+		System.out.println("testFreq");
 		m_oController.CallStartProcessing(WORD_LIST_FREQUENT[SEARCH_STRNG_INDEX]);
 		while(m_oController.isRunning())
 		{
@@ -136,6 +137,7 @@ public class AppTest {
 	
 	@Test
 	public void testMidFreq() throws InterruptedException {
+		System.out.println("testMidFreq");
 		m_oController.CallStartProcessing(WORD_LIST_MID_FREQUENT[SEARCH_STRNG_INDEX]);
 		while(m_oController.isRunning())
 		{
@@ -147,6 +149,7 @@ public class AppTest {
 	
 	@Test
 	public void testInFreq() throws InterruptedException {
+		System.out.println("testInFreq");
 		m_oController.CallStartProcessing(WORD_LIST_INFREQUENT[SEARCH_STRNG_INDEX]);
 		while(m_oController.isRunning())
 		{
@@ -158,7 +161,9 @@ public class AppTest {
 	
 	@Test
 	public void testRegEx1() throws InterruptedException {
-		m_oController.CallStartProcessing("*ithme*");
+		System.out.println("testRegEx1");
+		m_oController.CallStartProcessing("\\b\\w+(ithme\\b)");
+
 		while(m_oController.isRunning())
 		{
 			Thread.sleep(3000);
@@ -169,6 +174,7 @@ public class AppTest {
 	
 	@Test
 	public void testRegEx2() throws InterruptedException {
+		System.out.println("testRegEx2");
 		m_oController.CallStartProcessing("groun.wave");
 		while(m_oController.isRunning())
 		{
@@ -180,6 +186,7 @@ public class AppTest {
 	
 	@Test
 	public void testRegEx3() throws InterruptedException {
+		System.out.println("testRegEx3");
 		m_oController.CallStartProcessing("^fas");
 		while(m_oController.isRunning())
 		{
