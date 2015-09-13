@@ -125,7 +125,7 @@ public class AppTest {
 
 	@Test
 	public void testFreq() throws InterruptedException {
-		System.out.println("testFreq");
+		System.out.println("testFreq: pattern " + WORD_LIST_FREQUENT[SEARCH_STRNG_INDEX]);
 		m_oController.CallStartProcessing(WORD_LIST_FREQUENT[SEARCH_STRNG_INDEX]);
 		while(m_oController.isRunning())
 		{
@@ -133,11 +133,13 @@ public class AppTest {
 		}
 		
 		assertEquals(nFreqCount,m_oController.GetMatchCount());
+		System.out.println("Expected:" + String.valueOf(nFreqCount) + " Actual: " +  
+										String.valueOf(m_oController.GetMatchCount()) );
 	}
 	
 	@Test
 	public void testMidFreq() throws InterruptedException {
-		System.out.println("testMidFreq");
+		System.out.println("testMidFreq: pattern " + WORD_LIST_MID_FREQUENT[SEARCH_STRNG_INDEX]);
 		m_oController.CallStartProcessing(WORD_LIST_MID_FREQUENT[SEARCH_STRNG_INDEX]);
 		while(m_oController.isRunning())
 		{
@@ -145,11 +147,13 @@ public class AppTest {
 		}
 		
 		assertEquals(nMidFreqCount,m_oController.GetMatchCount());
+		System.out.println("Expected:" + String.valueOf(nFreqCount) + " Actual: " +  
+				String.valueOf(m_oController.GetMatchCount()) );
 	}
 	
 	@Test
 	public void testInFreq() throws InterruptedException {
-		System.out.println("testInFreq");
+		System.out.println("testInFreq: pattern " + WORD_LIST_INFREQUENT[SEARCH_STRNG_INDEX]);
 		m_oController.CallStartProcessing(WORD_LIST_INFREQUENT[SEARCH_STRNG_INDEX]);
 		while(m_oController.isRunning())
 		{
@@ -157,11 +161,13 @@ public class AppTest {
 		}
 		
 		assertEquals(nInFreqCount,m_oController.GetMatchCount());
+		System.out.println("Expected:" + String.valueOf(nFreqCount) + " Actual: " +  
+				String.valueOf(m_oController.GetMatchCount()) );
 	}
 	
 	@Test
 	public void testRegEx1() throws InterruptedException {
-		System.out.println("testRegEx1");
+		System.out.println("testRegEx1: pattern .*metic");
 		m_oController.CallStartProcessing(".*metic");
 
 		while(m_oController.isRunning())
@@ -170,11 +176,13 @@ public class AppTest {
 		}
 		
 		assertEquals(nFreqCount,m_oController.GetMatchCount());
+		System.out.println("Expected:" + String.valueOf(nFreqCount) + " Actual: " +  
+				String.valueOf(m_oController.GetMatchCount()) );
 	}
 	
 	@Test
 	public void testRegEx2() throws InterruptedException {
-		System.out.println("testRegEx2");
+		System.out.println("testRegEx2: pattern groun.wave");
 		m_oController.CallStartProcessing("groun.wave");
 		while(m_oController.isRunning())
 		{
@@ -182,11 +190,13 @@ public class AppTest {
 		}
 		
 		assertEquals(nMidFreqCount,m_oController.GetMatchCount());
+		System.out.println("Expected:" + String.valueOf(nFreqCount) + " Actual: " +  
+				String.valueOf(m_oController.GetMatchCount()) );
 	}
 	
 	@Test
 	public void testRegEx3() throws InterruptedException {
-		System.out.println("testRegEx3");
+		System.out.println("testRegEx3: pattern ^fas");
 		m_oController.CallStartProcessing("^fas");
 		while(m_oController.isRunning())
 		{
@@ -194,6 +204,8 @@ public class AppTest {
 		}
 		
 		assertEquals(nInFreqCount,m_oController.GetMatchCount());
+		System.out.println("Expected:" + String.valueOf(nFreqCount) + " Actual: " +  
+				String.valueOf(m_oController.GetMatchCount()) );
 	}
 	
 	@AfterClass
