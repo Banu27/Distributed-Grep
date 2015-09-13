@@ -98,7 +98,8 @@ public final class CommClient implements Iface {
 		}
 		catch (TException e)
 		{
-			e.printStackTrace();
+			ret = false;
+			//e.printStackTrace();
 		}
 		return ret;
 	}

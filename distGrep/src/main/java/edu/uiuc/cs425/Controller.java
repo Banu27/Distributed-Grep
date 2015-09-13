@@ -22,6 +22,7 @@ public class Controller implements Runnable {
 	private long					m_lStartTime;
 	private	boolean					m_bAskOnce;
 	private Thread 					m_oHealthMonitorThread;
+	Vector<Integer> 				m_oFailedNodes;
 	
 	Controller(int nodeID, String searchDir)	{
 		m_nNodeID = nodeID;
@@ -34,6 +35,7 @@ public class Controller implements Runnable {
 		m_sSearchDir = searchDir;
 		m_lStartTime = 0;
 		m_bAskOnce = false;
+		m_oFailedNodes = new Vector<Integer>();
 	}
 	
 	public void setAskOnce()
@@ -106,6 +108,7 @@ public class Controller implements Runnable {
 		m_nPatternMatchCount = 0;
 		m_lStartTime = System.currentTimeMillis();
 		for( int i=0; i<Commons.NUMBER_OF_VMS; i++) {
+			if(m_oFailedNodes.contains(i)) continue;
 			try
 			{
 				m_oClients[i].startProcessing(pattern);
@@ -175,6 +178,7 @@ public class Controller implements Runnable {
 		
 		System.out.println("Printing data : ");
 		for(int i=0; i<Commons.NUMBER_OF_VMS; i++) {
+			if(m_oFailedNodes.contains(i)) continue;
 			System.out.println("Node number : "+String.valueOf(i));
 			System.out.println(m_sGrepOutputData[i]);
 		}
@@ -260,7 +264,7 @@ public class Controller implements Runnable {
 	
 	public void run() {
 		// TODO Auto-generated method stub
-		Vector<Integer> failedNodes = new Vector<Integer>(); //Diamonds are allowed in 7+
+		//Diamonds are allowed in 7+
 		while(true) {
 			try {
 				Thread.sleep(3000);
@@ -269,14 +273,14 @@ public class Controller implements Runnable {
 				e.printStackTrace();
 			}
 			for(int i=0; i< Commons.NUMBER_OF_VMS; i++) {
-				if(!failedNodes.contains(i))
+				if(!m_oFailedNodes.contains(i))
 				{
 					try {
 						if(!m_oClients[i].isAlive())
 						{
 							System.err.println("Failed to receive heartbeat message from " + Commons.VM_NAMES[i]
 									+ " .Considered dead.");
-							failedNodes.add(i);
+							m_oFailedNodes.add(i);
 							Commons.aliveNumber--;
 						}
 					} catch (TException e) {
