@@ -17,7 +17,7 @@ public class Controller implements Runnable {
 	private int 					m_nDoneProcessingNumber;	
 	private Scanner 				m_oUser_input; 
 	private boolean					m_bIsRunning;
-	private int 					m_nPatternMatchCount;
+	private int []					m_nPatternMatchCount;
 	private String					m_sSearchDir;
 	private long					m_lStartTime;
 	private	boolean					m_bAskOnce;
@@ -31,7 +31,7 @@ public class Controller implements Runnable {
 		m_oLock = new Object();
 		m_oUser_input = new Scanner(System.in);		
 		m_bIsRunning = false;
-		m_nPatternMatchCount = 0;
+		m_nPatternMatchCount = new int[Commons.NUMBER_OF_VMS];
 		m_sSearchDir = searchDir;
 		m_lStartTime = 0;
 		m_bAskOnce = false;
@@ -45,7 +45,7 @@ public class Controller implements Runnable {
 	
 	public int GetMatchCount()
 	{
-		return m_nPatternMatchCount;
+		return 0;//m_nPatternMatchCount;
 	}
 	
 	
@@ -105,7 +105,10 @@ public class Controller implements Runnable {
 		
 		m_nDoneProcessingNumber = 0;
 		m_bIsRunning = true;
-		m_nPatternMatchCount = 0;
+		for(int i=0; i<Commons.NUMBER_OF_VMS; i ++)
+		{
+			m_nPatternMatchCount[i] = 0;
+		}
 		m_lStartTime = System.currentTimeMillis();
 		for( int i=0; i<Commons.NUMBER_OF_VMS; i++) {
 			if(m_oFailedNodes.contains(i)) continue;
@@ -157,9 +160,10 @@ public class Controller implements Runnable {
 	
 	public void setGrepOutputData (int nodeID, String data, int count ) {
 		m_sGrepOutputData[nodeID] = data;
+		m_nPatternMatchCount[nodeID] = count;
 		synchronized (m_oLock) {
 			m_nDoneProcessingNumber = m_nDoneProcessingNumber + 1;
-			m_nPatternMatchCount+=count;
+			//m_nPatternMatchCount+=count;
 		}
 		if(m_nDoneProcessingNumber == Commons.aliveNumber) {
 			m_bIsRunning = false;
