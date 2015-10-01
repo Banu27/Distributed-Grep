@@ -186,7 +186,12 @@ public class Controller implements Runnable {
 			System.out.println("Node number : "+String.valueOf(i));
 			System.out.println(m_sGrepOutputData[i]);
 		}
-		System.out.println("Total Lines: "+ String.valueOf(m_nPatternMatchCount));
+		int finalLineCount = 0;
+		for(int i=0; i< Commons.NUMBER_OF_VMS; i++)
+		{
+			finalLineCount = finalLineCount + m_nPatternMatchCount[i];
+		}
+		System.out.println("Total Lines: "+ String.valueOf(finalLineCount));
 		
 	}	
 	

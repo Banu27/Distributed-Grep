@@ -90,13 +90,8 @@ public class FileProcessing {
 	    		while ((line = lineReader.readLine()) != null) {
 	    			m = regexp.matcher(line); //reset the input
 	    			if (m.find()) {
-	    				m_nCount++;
-                  /*
-	    				if(m_nCount%100 == 0)
-					{
-						System.out.println("Progress here : " + String.valueOf(m_nCount)); 
-					}*/
-					output = output + String.valueOf(lineReader.getLineNumber()) +": "+ line + "\n";
+	    				m_nCount ++;
+	    				output = output + String.valueOf(m_nCount) + String.valueOf(lineReader.getLineNumber()) +": "+ line + "\n";
 	    			}
 	    		}
 	    } catch (IOException ex){
