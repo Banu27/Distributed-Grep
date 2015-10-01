@@ -91,7 +91,7 @@ public class FileProcessing {
 	    			m = regexp.matcher(line); //reset the input
 	    			if (m.find()) {
 	    				m_nCount ++;
-	    				output = output + String.valueOf(m_nCount) + String.valueOf(lineReader.getLineNumber()) +": "+ line + "\n";
+	    				output = output + String.valueOf(m_nCount) +" - " + String.valueOf(lineReader.getLineNumber()) +": "+ line + "\n";
 	    			}
 	    		}
 	    } catch (IOException ex){
