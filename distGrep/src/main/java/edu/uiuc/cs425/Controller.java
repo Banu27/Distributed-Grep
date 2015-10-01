@@ -165,7 +165,7 @@ public class Controller implements Runnable {
 			m_nDoneProcessingNumber = m_nDoneProcessingNumber + 1;
 			//m_nPatternMatchCount+=count;
 		}
-		if(m_nDoneProcessingNumber == Commons.aliveNumber) {
+		/*if(m_nDoneProcessingNumber == Commons.aliveNumber) {
 			m_bIsRunning = false;
 			printGrepOutput();
 			System.out.println("Query time: " + String.valueOf(System.currentTimeMillis() - m_lStartTime) + "ms");
@@ -174,7 +174,7 @@ public class Controller implements Runnable {
 				System.out.println("Failed to successfully start Grepping. Shutting down ...");
 				ExitApp();
 			}
-		}
+		}*/
 		
 	}
 	
@@ -280,6 +280,16 @@ public class Controller implements Runnable {
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+			if(m_nDoneProcessingNumber == Commons.aliveNumber) {
+				m_bIsRunning = false;
+				printGrepOutput();
+				System.out.println("Query time: " + String.valueOf(System.currentTimeMillis() - m_lStartTime) + "ms");
+				if( !m_bAskOnce && Commons.FAILURE == startGrep())
+				{
+					System.out.println("Failed to successfully start Grepping. Shutting down ...");
+					ExitApp();
+				}
 			}
 			for(int i=1; i< Commons.NUMBER_OF_VMS; i++) {
 				if(!m_oFailedNodes.contains(i))
